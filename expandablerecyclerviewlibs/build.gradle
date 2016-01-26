@@ -7,7 +7,7 @@ version = "0.5.1"
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
-    resourcePrefix "TreeRecyclerView"    //这个随便填
+    resourcePrefix "TreeRecyclerView-Libs"    //这个随便填
     defaultConfig {
         minSdkVersion 10
         targetSdkVersion 23
@@ -34,8 +34,8 @@ dependencies {
 
 }
 
-def siteUrl = 'https://github.com/MilkCatLZ/TreeRecyclerView' // 项目的主页
-def gitUrl = 'https://github.com/MilkCatLZ/TreeRecyclerView.git' // Git仓库的url
+def siteUrl = 'https://github.com/MilkCatLZ/TreeRecyclerView-Libs' // 项目的主页
+def gitUrl = 'https://github.com/MilkCatLZ/TreeRecyclerView-Libs.git' // Git仓库的url
 group = "milkcatlz.libs.treerecyclerview" // Maven Group ID for the artifact，一般填你唯一的包名
 
 install {
