@@ -5,7 +5,7 @@ A simple way to create tree list with RecyclerView
 ![image](https://github.com/NightLZ/ExpandableRecycler/blob/master/screenshot/DeepinScreenshot20160125162229.png)  
 
 ##Webite  
-    https://github.com/NightLZ/ExpandableRecycler
+    https://github.com/MilkCatLZ/TreeRecyclerView-Libs
 
 ## Integration
 
