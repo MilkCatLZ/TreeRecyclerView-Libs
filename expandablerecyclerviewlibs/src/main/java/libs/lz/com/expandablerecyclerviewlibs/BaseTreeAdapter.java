@@ -26,10 +26,26 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
                 .ExpandableHolder> extends RecyclerView
                                                    .Adapter<Holder> {
 
+    /**
+     * original list,save all nodes here
+     *
+     */
     private List<Node> orgTreeList = new ArrayList<>();
+
+    /**
+     * The showing nodes
+     * When parent node collapsed,the child in {@link #currentOrgTreeList} will remove
+     *
+     */
     private List<Node> currentOrgTreeList = new ArrayList<>();
+    /**
+     * The expand/collapse map cache
+     */
     private SparseArray<Boolean> collapseMap = new SparseArray<>();
     private OnItemClickListener<Node> listener;
+    /**
+     * The last clicked no child node
+     */
     private Node lastSelectedNode = null;
 
     public void setListener(OnItemClickListener<Node> listener) {

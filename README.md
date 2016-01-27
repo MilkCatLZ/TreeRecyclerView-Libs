@@ -94,8 +94,7 @@ dependencies {
 ```
 ##### 3、将解析好的数据设置进adapter
 ```java
-	adapter.setItems(list);
-	adapter.setVisibleItems(list);
+	adapter.setupList(list);
 	recyclerView.setAdapter(adapter);
 ```
 ##### 4、Done

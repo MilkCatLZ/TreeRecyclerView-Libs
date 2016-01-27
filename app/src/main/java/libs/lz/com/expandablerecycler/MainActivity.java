@@ -79,8 +79,7 @@ public class MainActivity extends AppCompatActivity implements BaseTreeAdapter.O
 //        list.add(new TestNode(13,444,true));
 //        list.add(new TestNode(14,13,false));
 //        list.add(new TestNode(15,13,false));
-        adapter.setItems(list);
-        adapter.setVisibleItems(list);
+        adapter.setupList(list);
         recyclerView.setAdapter(adapter);
     }
 
