@@ -28,11 +28,16 @@ public class TestAdapter extends BaseTreeAdapter<TestNode, TestAdapter.Holder> {
         textView.setText(getItem(position)
                                  .getText() + "-" + getItem(position).getId());
         textView.setPadding(getItem(position).getLevel() * 30, 0, 0, 0);
-        if (isCollapsed(getItem(position))) {
-            textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_black_18dp, 0,
-                                                             0, 0);
+        if (getItem(position).hasChild()) {
+            if (isCollapsed(getItem(position))) {
+                textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_black_18dp, 0,
+                                                                 0, 0);
+            } else {
+                textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_remove_black_18dp, 0,
+                                                                 0, 0);
+            }
         } else {
-            textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_remove_black_18dp, 0,
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0,
                                                              0, 0);
         }
     }
