@@ -41,14 +41,19 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
         return currentOrgTreeList.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
     /**
      * THe original items
      *
      * @param items
      */
     public void setItems(List<Node> items) {
+        orgTreeList.clear();
         orgTreeList.addAll(items);
-
     }
 
     /**
@@ -57,8 +62,18 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
      * @param items
      */
     public void setVisibleItems(List<Node> items) {
+        currentOrgTreeList.clear();
         currentOrgTreeList.addAll(items);
         notifyDataSetChanged();
+    }
+
+    /**
+     * setup the Adapter
+     * @param items
+     */
+    public void setupList(List<Node> items) {
+        setItems(items);
+        setVisibleItems(items);
     }
 
 
@@ -82,7 +97,7 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         if (currentOrgTreeList != null && currentOrgTreeList.size() > 0) {
-            holder.itemView.setTag(currentOrgTreeList.get(position));
+            holder.itemView.setTag(R.id.TreeRecyclerViewLibsTree_node,currentOrgTreeList.get(position));
 
         }
     }
@@ -118,8 +133,9 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
                 if (listener != null) {
                     listener.onLastTreeNodeItemClick(item, getAdapterPosition());
                 }
+                lastSelectedNode = item;
             }
-            lastSelectedNode = item;
+
             notifyItemChanged(getAdapterPosition());
         }
 
