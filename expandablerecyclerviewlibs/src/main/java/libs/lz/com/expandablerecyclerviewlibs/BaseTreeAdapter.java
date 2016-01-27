@@ -113,7 +113,7 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         if (currentOrgTreeList != null && currentOrgTreeList.size() > 0) {
-            holder.itemView.setTag(R.id.TreeRecyclerViewLibsTree_node,currentOrgTreeList.get(position));
+            holder.itemView.setTag(R.id.TreeRecyclerViewLibsTree_node,getItem(position));
 
         }
     }
@@ -129,7 +129,7 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
 
         @Override
         public void onClick(View v) {
-            Node item = (Node) v.getTag();
+            Node item = (Node) v.getTag(R.id.TreeRecyclerViewLibsTree_node);
             if (hasChild(item)) {
                 if (isCollapsed(item)) {
                     expand(item);
