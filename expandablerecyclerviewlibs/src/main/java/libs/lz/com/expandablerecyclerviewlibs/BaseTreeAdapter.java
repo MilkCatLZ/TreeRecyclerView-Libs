@@ -276,4 +276,11 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
         return lastSelectedNode == null ? orgTreeList.get(0) : lastSelectedNode;
     }
 
+    /**
+     *
+     * @param node
+     */
+    public void setLastSelectedNode(Node node) {
+        this.lastSelectedNode = node;
+    }
 }
