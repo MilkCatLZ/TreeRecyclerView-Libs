@@ -37,12 +37,15 @@ public class TestAdapter extends BaseTreeAdapter<TestNode, TestAdapter.Holder> {
                 textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_remove_black_18dp, 0,
                                                                  0, 0);
             }
-            textView.setPadding(getItem(position).getLevel() * 30, 0, 0, 0);
+            textView.setPadding(getItem(position).getLevel() * 20, 0, 0, 0);
         } else {
             textView.setCompoundDrawablesWithIntrinsicBounds(0, 0,
                                                              0, 0);
-            textView.setPadding(0, 0, 0, 0);
+            textView.setPadding(getItem(position).getLevel() * 20 + holder.itemView.getContext()
+                                                                                   .getResources()
+                                                                                   .getDimensionPixelSize(R.dimen._18dp), 0, 0, 0);
         }
+
     }
 
     public class Holder extends BaseTreeAdapter<TestNode, TestAdapter.Holder>.ExpandableHolder {
