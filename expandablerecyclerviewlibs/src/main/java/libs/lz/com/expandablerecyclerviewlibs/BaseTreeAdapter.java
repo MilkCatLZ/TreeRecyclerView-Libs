@@ -24,18 +24,16 @@ import java.util.List;
 public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
         extends BaseTreeAdapter
                 .ExpandableHolder> extends RecyclerView
-                                                   .Adapter<Holder> {
+        .Adapter<Holder> {
 
     /**
      * original list,save all nodes here
-     *
      */
     private List<Node> orgTreeList = new ArrayList<>();
 
     /**
      * The showing nodes
      * When parent node collapsed,the child in {@link #currentOrgTreeList} will remove
-     *
      */
     private List<Node> currentOrgTreeList = new ArrayList<>();
     /**
@@ -85,6 +83,7 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
 
     /**
      * setup the Adapter
+     *
      * @param items
      */
     public void setupList(List<Node> items) {
@@ -113,7 +112,7 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         if (currentOrgTreeList != null && currentOrgTreeList.size() > 0) {
-            holder.itemView.setTag(R.id.TreeRecyclerViewLibsTree_node,getItem(position));
+            holder.itemView.setTag(R.id.TreeRecyclerViewLibsTree_node, getItem(position));
 
         }
     }
@@ -273,11 +272,23 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
      */
     @Nullable
     public Node getLastClickedNode() {
-        return lastSelectedNode == null ? orgTreeList.get(0) : lastSelectedNode;
+        return lastSelectedNode == null ? getFirstNoChildNode() : lastSelectedNode;
     }
 
     /**
-     *
+     * @return The first no child node or null
+     */
+    public Node getFirstNoChildNode() {
+        for (int i = 0; i < currentOrgTreeList.size(); i++) {
+            Node o = currentOrgTreeList.get(i);
+            if (!o.hasChild()) {
+                return o;
+            }
+        }
+        return null;
+    }
+
+    /**
      * @param node
      */
     public void setLastSelectedNode(Node node) {
