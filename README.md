@@ -11,7 +11,7 @@ A simple way to create tree list with RecyclerView
 
 ```java
 dependencies {
-　　compile 'com.lz.lib.treerecyclerview:expandablerecyclerviewlibs:1.0.2' 
+　　compile 'milkcatlz.libs.treerecyclerview:expandablerecyclerviewlibs:0.5.4'
 }
 ```
 
