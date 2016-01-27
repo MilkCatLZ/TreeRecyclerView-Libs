@@ -32,13 +32,16 @@ public class TestAdapter extends BaseTreeAdapter<TestNode, TestAdapter.Holder> {
             if (isCollapsed(getItem(position))) {
                 textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_black_18dp, 0,
                                                                  0, 0);
+
             } else {
                 textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_remove_black_18dp, 0,
                                                                  0, 0);
             }
+            textView.setPadding(getItem(position).getLevel() * 30, 0, 0, 0);
         } else {
             textView.setCompoundDrawablesWithIntrinsicBounds(0, 0,
                                                              0, 0);
+            textView.setPadding(0, 0, 0, 0);
         }
     }
 
