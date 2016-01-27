@@ -2,11 +2,17 @@ package libs.lz.com.expandablerecyclerviewlibs;
 
 //import android.databinding.ViewDataBinding;
 
+import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 //import static android.databinding.DataBindingUtil.inflate;
@@ -24,6 +30,7 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
     private List<Node> currentOrgTreeList = new ArrayList<>();
     private SparseArray<Boolean> collapseMap = new SparseArray<>();
     private OnItemClickListener<Node> listener;
+    private Node lastSelectedNode = null;
 
     public void setListener(OnItemClickListener<Node> listener) {
         this.listener = listener;
@@ -112,6 +119,7 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
                     listener.onLastTreeNodeItemClick(item, getAdapterPosition());
                 }
             }
+            lastSelectedNode = item;
             notifyItemChanged(getAdapterPosition());
         }
 
@@ -175,7 +183,7 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
 
     /**
      * @param position
-     * @return
+     * @return The item in current showing list on position
      */
     public Node getItem(int position) {
         return currentOrgTreeList.get(position);
@@ -198,27 +206,42 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
     }
 
     /**
-     *
-     * @return
+     * @return The original list
      */
     public List<Node> getOrgTreeList() {
-        return orgTreeList;
+        return Collections.unmodifiableList(orgTreeList);
     }
 
     /**
-     *
-     * @return
+     * @return The current showing list
      */
     public List<Node> getCurrentOrgTreeList() {
-        return currentOrgTreeList;
+        return Collections.unmodifiableList(currentOrgTreeList);
     }
 
     /**
-     *
-     * @param position
-     * @return
+     * @param child
+     * @return The parent node,if parent not excise,return the child
      */
-    public Node getOrignalItem(int position){
-        return currentOrgTreeList.get(position);
+    @Keep
+    @NonNull
+    public Node getParentNode(@NonNull Node child) {
+        for (int i = 0; i < getOrgTreeList().size(); i++) {
+            Node parent = getOrgTreeList().get(i);
+            if (child.getPId() == parent.getId()) {
+                return parent;
+            }
+        }
+        return child;
     }
+
+    /**
+     * @return The last clicked Node,if nothing clicked yet,return the first node in {@link
+     * #orgTreeList}
+     */
+    @Nullable
+    public Node getLastClickedNode() {
+        return lastSelectedNode == null ? orgTreeList.get(0) : lastSelectedNode;
+    }
+
 }
