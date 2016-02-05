@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements BaseTreeAdapter.O
 //        list.add(new TestNode(15,13,false));
         adapter.setupList(list);
         recyclerView.setAdapter(adapter);
+        adapter.setCollapsable(false);
     }
 
     @Override
