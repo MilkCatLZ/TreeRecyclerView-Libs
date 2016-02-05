@@ -9,9 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,6 +43,9 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
      * The last clicked no child node
      */
     private Node lastSelectedNode = null;
+
+
+    private boolean collapsable = true;
 
     public void setListener(OnItemClickListener<Node> listener) {
         this.listener = listener;
@@ -158,30 +159,34 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
          * @param parent
          */
         public void expand(Node parent) {
-            List<Node> cacheList = new ArrayList<>();
-            for (int i = orgTreeList.indexOf(parent) + 1; i < orgTreeList.size(); i++) {
-                Node child = orgTreeList.get(i);
-                if (parent.getId() == child.getPId()) {
-                    cacheList.add(child);
+            if (collapsable) {
+                List<Node> cacheList = new ArrayList<>();
+                for (int i = orgTreeList.indexOf(parent) + 1; i < orgTreeList.size(); i++) {
+                    Node child = orgTreeList.get(i);
+                    if (parent.getId() == child.getPId()) {
+                        cacheList.add(child);
+                    }
                 }
+                int location = currentOrgTreeList.indexOf(parent);
+                currentOrgTreeList.addAll(location + 1, cacheList);
+                notifyItemRangeInserted(location + 1, cacheList.size());
+                setCollapsed(parent, false);
             }
-            int location = currentOrgTreeList.indexOf(parent);
-            currentOrgTreeList.addAll(location + 1, cacheList);
-            notifyItemRangeInserted(location + 1, cacheList.size());
-            setCollapsed(parent, false);
         }
 
         /**
          * @param node
          */
         public void collapse(Node node) {
-            List<Node> cacheList = getChildNode(node);
-            if (cacheList.size() > 0) {
-                int location = currentOrgTreeList.indexOf(node);
-                currentOrgTreeList.removeAll(cacheList);
-                notifyItemRangeRemoved(location + 1, cacheList.size());
+            if (collapsable) {
+                List<Node> cacheList = getChildNode(node);
+                if (cacheList.size() > 0) {
+                    int location = currentOrgTreeList.indexOf(node);
+                    currentOrgTreeList.removeAll(cacheList);
+                    notifyItemRangeRemoved(location + 1, cacheList.size());
+                }
+                setCollapsed(node, true);
             }
-            setCollapsed(node, true);
         }
 
         /**
@@ -202,6 +207,7 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
             }
             return cacheList;
         }
+
     }
 
     /**
@@ -293,5 +299,22 @@ public abstract class BaseTreeAdapter<Node extends BaseTreeNodeInterface, Holder
      */
     public void setLastSelectedNode(Node node) {
         this.lastSelectedNode = node;
+    }
+
+
+    /**
+     * Is list collapsable
+     * @return
+     */
+    public boolean isCollapsable() {
+        return collapsable;
+    }
+
+    /**
+     * set collapsable
+     * @param collapsable
+     */
+    public void setCollapsable(boolean collapsable) {
+        this.collapsable = collapsable;
     }
 }
